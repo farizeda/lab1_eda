@@ -1,25 +1,56 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h5>Nama: </h5>
-<b>{{nama}}</b>
 
-<table>
-    <tr>
-    <th>Nama Barang</th>
-    <th>Harga Barang</th>
-    <th>Deskripsi</th>
-    </tr>
-    {% comment %} Tambahkan data di bawah baris ini {% endcomment %}
-    {% for barang in list_barang %}
-        <tr>
-            <th>{{barang.nama_barang}}</th>
-            <th>{{barang.harga_barang}}</th>
-            <th>{{barang.deskripsi}}</th>
-        </tr>
-    {% endfor %}
-</table>
-<h5>Sesi terakhir login: {{ last_login }}</h5>
-<button><a href="{% url 'wishlist:logout' %}">Logout</a></button>
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+        <img src="https://cdn-icons-png.flaticon.com/24/2767/2767003.png" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+      <a class="navbar-brand" >{{nama}}'s wishlist</a>
+      <a class="btn btn-outline-primary" href="{% url 'wishlist:logout' %}">Logout</a>
+    </div>
+  </nav>
+
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="col-xl-10 offset-xl-1 mt-4">
+    <table class="table table-bordered">
+        <thead>
+            <tr class="table-info">
+            <th  style="text-align:center">Nama Barang</th>
+            <th  style="text-align:center">Harga Barang</th>
+            <th  style="text-align:center">Deskripsi</th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider">
+            {% comment %} Tambahkan data di bawah baris ini {% endcomment %}
+            {% for barang in list_barang %}
+                <tr>
+                    <td >{{barang.nama_barang}}</td>
+                    <td>{{barang.harga_barang}}</td>
+                    <td>{{barang.deskripsi}}</td>
+                </tr>
+            {% endfor %}
+        </div>
+        </tbody>
+    </table>
+
+    <figure class="text-center">
+        <blockquote class="blockquote">
+            <p>Sesi terakhir login: {{ last_login }}</p>
+        </blockquote>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+  </body>
+</html>
 
 {% endblock content %}
