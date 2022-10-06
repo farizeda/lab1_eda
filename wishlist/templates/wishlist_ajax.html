@@ -50,6 +50,89 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <form method="POST" action="">
+      {% csrf_token %}
+      <h5>Add New</h5>
+      <table>
+        <tr>
+          <td>Nama Barang: </td>
+          <td><input type="text" id="nama_barang" name="nama_barang" placeholder="Nama Barang" class="form-control"></td>
+        </tr>
+  
+        <tr>
+          <td>Harga Barang: </td>
+          <td><input type="number" id="harga_barang" name="harga_barang" placeholder="Harga Barang" class="form-control"></td>
+        </tr>
+  
+        <tr>
+          <td>Deskripsi: </td>
+          <td><textarea class="form-control" id="deskripsi" name="deskripsi"></textarea></td>
+        </tr>
+  
+        <tr>
+          <td></td>
+          <td><input class="btn btn-success" type="submit" value="Submit" id="newBtn"></td>
+        </tr>
+      </table>
+    </form>
+  </div>
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script>
+    function postNew(e) {
+      e.preventDefault()
+      var namaBarang = $("#nama_barang").val()
+      var hargaBarang = $("#harga_barang").val()
+      var deskripsi = $("#deskripsi").val()
+  
+      var data = {
+        nama_barang: namaBarang,
+        harga_barang: hargaBarang,
+        deskripsi,
+        csrfmiddlewaretoken: "{{ csrf_token }}"
+      }
+  
+      $.ajax({
+        type: 'POST',
+        url: '/wishlist/ajax/submit',
+        data: data, 
+        success: () => {
+          alert("Done!")
+          fetchData()
+        },
+        dataType: 'json'
+      });
+    }
+  
+    function buat_tabel(data) {
+      const table = $("#tbl")
+      table.empty()
+      for (let i = 0; i < data.length; i++) {
+        table.append(`
+          <tr>
+            <td>${data[i].fields.nama_barang}</td>
+            <td>${data[i].fields.harga_barang}</td>
+            <td>${data[i].fields.deskripsi}</td>
+          </tr>
+          `)
+      }
+    }
+  
+    function fetchData() {
+      $.get("/wishlist/json", buat_tabel)
+    }
+  
+    $(document).ready(() => {
+      $("#newBtn").click(postNew)
+      fetchData()
+    })
+  </script>
+</script>
+
   </body>
 </html>
 
